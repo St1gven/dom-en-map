@@ -17,17 +17,20 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
 
     constructor(props: {}) {
         super(props)
-        this.setState({
+        this.state = {
             teams: []
-        })
+        }
     }
 
     componentDidMount() {
         fetch("http://localhost:8080/hello")
             .then(response => response.json())
-            .then(response => this.setState({
-                teams: response
-            }))
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    teams: response
+                })
+            })
             .catch(error => {
                 console.log(error);
                 this.setState({
@@ -37,13 +40,8 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
     }
 
     render() {
-        const globalMess = (document.querySelector('.globalmess')?.childNodes[3])?.textContent;
-        let teamCords: TeamCords[] = [];
-        if (globalMess != null) {
-            teamCords = JSON.parse(globalMess) as TeamCords[];
-        }
 
-        return teamCords.map( (teamCord, index) => {
+        return this.state.teams.map( (teamCord, index) => {
             return <ImageOverlay key={index}
                                  interactive={true}
                                  className={"team"}
