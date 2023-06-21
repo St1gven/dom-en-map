@@ -54,34 +54,3 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
         });
     }
 }
-
-export function TeamMarkers2() {
-
-    /* const globalMess = (document.querySelector('.globalmess')?.childNodes[3])?.textContent;
- let teamCords: TeamCords[] = [];
- if (globalMess != null) {
-     teamCords = JSON.parse(globalMess) as TeamCords[];
- }*/
-    const [apiResponse, setApiResponse] = useState([] as TeamCords[]);
-
-    const callRestApi = async () => {
-        const response = await fetch("http://localhost:8080/hello");
-        return await response.json() as TeamCords[];
-    };
-
-    useEffect(() => {
-        callRestApi().then(result => setApiResponse(result));
-    }, []);
-
-    return apiResponse.map((teamCord, index) => {
-        return <React.Fragment>
-            <ImageOverlay key={index}
-        interactive={true}
-        className={"team"}
-        url={teamCord.flag}
-        bounds={new LatLng(teamCord.cords[0], teamCord.cords[1]).toBounds(300)}>
-        <Tooltip content={teamCord.name}></Tooltip>
-            </ImageOverlay>
-            </React.Fragment>
-    });
-}
