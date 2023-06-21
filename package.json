@@ -2,6 +2,7 @@
   "name": "react-map",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -16,7 +17,8 @@
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "react-leaflet": "^4.2.1",
-    "ts-serializable": "^3.0.28"
+    "ts-serializable": "^3.0.28",
+    "axios": "^1.4.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.3"
