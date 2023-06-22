@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {JSX} from "react";
 import {ImageOverlay, Tooltip} from "react-leaflet";
 import {LatLng} from "leaflet";
 
@@ -10,19 +10,21 @@ interface TeamCords {
 }
 
 type TeamsState = {
-    teams: TeamCords[]
+    teams: Map<string, TeamCords>
 }
 
 export class TeamMarkers extends React.Component<{}, TeamsState> {
-
+    ws: WebSocket
     constructor(props: {}) {
         super(props)
         this.state = {
-            teams: []
+            teams: new Map<string, TeamCords>()
         }
+        this.ws = new WebSocket("ws://localhost:8080/start-websocket/test")
     }
 
-    componentDidMount() {
+
+    loadTeams = () => {
         fetch("http://localhost:8080/hello")
             .then(response => response.json())
             .then(response => {
@@ -34,21 +36,46 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
             .catch(error => {
                 console.log(error);
                 this.setState({
-                    teams: []
+                    teams: new Map<string, TeamCords>()
                 })
             });
     }
 
-    render() {
+    componentDidMount() {
+        this.ws.onmessage = (event) => {
+            const data = JSON.parse(event.data)
+            if (Array.isArray(data)) {
+                this.setState({
+                    teams: new Map(data.map(obj => [obj.name, obj]),)
+                })
+            } else {
+                this.setState({
+                    teams: this.state.teams.set(data.name, data)
+                })
+            }
+        }
+        this.ws.onopen = (event) => {
+            console.log('connected')
+            this.ws.send("_ready_")
+        }
+    }
 
-        return this.state.teams.map( (teamCord, index) => {
-            return <ImageOverlay key={index}
+    componentWillUnmount() {
+        this.ws.close()
+    }
+
+    render() {
+        console.log(this.state.teams)
+        let result: JSX.Element[] = []
+        this.state.teams.forEach( (teamCord, name ) => {
+            result.push(<ImageOverlay key={name}
                                  interactive={true}
                                  className={"team"}
                                  url={teamCord.flag}
                                  bounds={new LatLng(teamCord.cords[0], teamCord.cords[1]).toBounds(300)}>
                 <Tooltip content={teamCord.name}></Tooltip>
-            </ImageOverlay>
+            </ImageOverlay>)
         });
+        return result;
     }
 }
