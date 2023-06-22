@@ -1,16 +1,26 @@
-import React, {JSX} from "react";
+import React, {JSX, Ref, RefObject} from "react";
 import {ImageOverlay, Tooltip} from "react-leaflet";
 import {LatLng} from "leaflet";
+import {TeamMarker} from "./TeamMarker";
 
-interface TeamCords {
+export interface TeamCords {
 
     cords: number[];
     name: string;
     flag: string;
+
+}
+
+export interface TeamMarkerHandler {
+
+    team: TeamCords
+    ref: RefObject<TeamMarker>
+
+    marker: JSX.Element
 }
 
 type TeamsState = {
-    teams: Map<string, TeamCords>
+    teams: Map<string, TeamMarkerHandler>
 }
 
 export class TeamMarkers extends React.Component<{}, TeamsState> {
@@ -18,27 +28,18 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
     constructor(props: {}) {
         super(props)
         this.state = {
-            teams: new Map<string, TeamCords>()
+            teams: new Map()
         }
         this.ws = new WebSocket("ws://localhost:8080/start-websocket/test")
     }
 
-
-    loadTeams = () => {
-        fetch("http://localhost:8080/hello")
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
-                this.setState({
-                    teams: response
-                })
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({
-                    teams: new Map<string, TeamCords>()
-                })
-            });
+    private buildMarkerHandler(team: TeamCords): TeamMarkerHandler {
+        const ref: RefObject<TeamMarker> = React.createRef()
+        return {
+            team: team,
+            ref: ref,
+            marker: <TeamMarker key={team.name} ref={ref} team={team}></TeamMarker>
+        }
     }
 
     componentDidMount() {
@@ -46,12 +47,18 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
             const data = JSON.parse(event.data)
             if (Array.isArray(data)) {
                 this.setState({
-                    teams: new Map(data.map(obj => [obj.name, obj]),)
+                    teams: new Map((data as TeamCords[]).map(obj => [obj.name, this.buildMarkerHandler(obj)]),)
                 })
             } else {
-                this.setState({
-                    teams: this.state.teams.set(data.name, data)
-                })
+                const team: TeamMarkerHandler | undefined = this.state.teams.get(data.name)
+                if (team) {
+                    team.ref.current?.setState(data)
+                } else {
+                    this.setState({
+                       teams: this.state.teams.set(data.name, this.buildMarkerHandler(data))
+                    })
+                }
+
             }
         }
         this.ws.onopen = (event) => {
@@ -65,16 +72,11 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
     }
 
     render() {
-        console.log(this.state.teams)
         let result: JSX.Element[] = []
-        this.state.teams.forEach( (teamCord, name ) => {
-            result.push(<ImageOverlay key={name}
-                                 interactive={true}
-                                 className={"team"}
-                                 url={teamCord.flag}
-                                 bounds={new LatLng(teamCord.cords[0], teamCord.cords[1]).toBounds(300)}>
-                <Tooltip content={teamCord.name}></Tooltip>
-            </ImageOverlay>)
+        this.state.teams.forEach( (teamCord) => {
+            if (teamCord.marker != null) {
+                result.push(teamCord.marker)
+            }
         });
         return result;
     }
