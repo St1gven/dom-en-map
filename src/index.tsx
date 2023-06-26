@@ -1,19 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {MapContainer, TileLayer} from 'react-leaflet'
-import {TeamMarkers} from "./TeamMarkers";
+import {Map} from "./Map";
 
 const root = ReactDOM.createRoot(
     document.getElementById('map') as HTMLElement
 );
 
 root.render(
-    <MapContainer center={[53.200513, 50.163183]} zoom={13}>
-        <TileLayer
-            attribution='<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <TeamMarkers/>
-    </MapContainer>
+    <Map />
 );

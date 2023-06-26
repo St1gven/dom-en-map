@@ -1,4 +1,4 @@
-import React, {JSX} from "react";
+import React from "react";
 import {ImageOverlay, Tooltip} from "react-leaflet";
 import {LatLng} from "leaflet";
 import {TeamCords} from "./TeamMarkers";
@@ -13,12 +13,7 @@ export class TeamMarker extends React.Component<TeamMarkerProps, TeamCords> {
         this.state = this.props.team
     }
 
-    componentDidMount() {
-        console.log("TeamMarker mounted")
-    }
-
     render() {
-        console.log("Team marker rendered")
         return <ImageOverlay key={this.state.name}
                              interactive={true}
                              className={"team"}

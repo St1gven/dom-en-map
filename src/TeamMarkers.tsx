@@ -1,6 +1,4 @@
-import React, {JSX, Ref, RefObject} from "react";
-import {ImageOverlay, Tooltip} from "react-leaflet";
-import {LatLng} from "leaflet";
+import React, {ReactElement, RefObject} from "react";
 import {TeamMarker} from "./TeamMarker";
 
 export interface TeamCords {
@@ -8,15 +6,13 @@ export interface TeamCords {
     cords: number[];
     name: string;
     flag: string;
-
 }
 
 export interface TeamMarkerHandler {
 
     team: TeamCords
     ref: RefObject<TeamMarker>
-
-    marker: JSX.Element
+    marker: ReactElement<TeamMarker>
 }
 
 type TeamsState = {
@@ -24,13 +20,13 @@ type TeamsState = {
 }
 
 export class TeamMarkers extends React.Component<{}, TeamsState> {
-    ws: WebSocket
+    ws: WebSocket | null
     constructor(props: {}) {
         super(props)
         this.state = {
             teams: new Map()
         }
-        this.ws = new WebSocket("ws://localhost:8080/start-websocket/test")
+        this.ws = null
     }
 
     private buildMarkerHandler(team: TeamCords): TeamMarkerHandler {
@@ -38,12 +34,13 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
         return {
             team: team,
             ref: ref,
-            marker: <TeamMarker key={team.name} ref={ref} team={team}></TeamMarker>
+            marker: <TeamMarker key={team.name} ref={ref} team={team} />
         }
     }
 
-    componentDidMount() {
-        this.ws.onmessage = (event) => {
+    connectWs = () => {
+        const ws: WebSocket = new WebSocket("ws://localhost:8080/teams/test")
+        ws.onmessage = (event) => {
             const data = JSON.parse(event.data)
             if (Array.isArray(data)) {
                 this.setState({
@@ -55,25 +52,39 @@ export class TeamMarkers extends React.Component<{}, TeamsState> {
                     team.ref.current?.setState(data)
                 } else {
                     this.setState({
-                       teams: this.state.teams.set(data.name, this.buildMarkerHandler(data))
+                        teams: this.state.teams.set(data.name, this.buildMarkerHandler(data))
                     })
                 }
-
             }
         }
-        this.ws.onopen = (event) => {
-            console.log('connected')
+        ws.onopen = (event: Event) => {
+            //console.log('connected')
+            this.ws = ws
             this.ws.send("_ready_")
         }
+        ws.onclose = (event: CloseEvent) => {
+            if (event.code !== 1000 && event.code < 4000) {
+                this.ws = null
+                setTimeout(this.connectWs, 1000); //todo interval
+            }
+        }
+        ws.onerror = (event: Event) => {
+            this.ws = null
+            setTimeout(this.connectWs, 1000); //todo interval
+        }
+    }
+
+    componentDidMount() {
+        this.connectWs()
     }
 
     componentWillUnmount() {
-        this.ws.close()
+        this.ws?.close()
     }
 
     render() {
-        let result: JSX.Element[] = []
-        this.state.teams.forEach( (teamCord) => {
+        const result: ReactElement<TeamMarker>[] = []
+        this.state.teams.forEach((teamCord) => {
             if (teamCord.marker != null) {
                 result.push(teamCord.marker)
             }
