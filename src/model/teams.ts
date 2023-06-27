@@ -1,6 +1,5 @@
 import {createEvent, createStore} from "effector";
 
-
 export interface Team {
 
     cords: number[];
@@ -13,7 +12,6 @@ export const update = createEvent<Team>();
 export const create = createEvent<Team[]>();
 
 const updateTeams = (state: Team[], data: Team) => {
-    console.log("updateTeams")
     const userIndex = state.findIndex((team) => team.name === data.name);
 
     if (userIndex > -1) {
@@ -26,7 +24,6 @@ const updateTeams = (state: Team[], data: Team) => {
 };
 
 const createTeams = (state: Team[], data: Team[]) => {
-    console.log("createTeams")
     return [...data];
 };
 

@@ -1,210 +1,123 @@
-import React, {RefObject} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {Circle, LayerGroup, LayersControl, Marker} from "react-leaflet";
-import {Control, Icon, LatLng, LeafletEvent} from "leaflet";
-import {Cookies, withCookies} from "react-cookie";
-import {instanceOf} from "prop-types";
+import {Icon, LatLng, LeafletEvent} from "leaflet";
+import {useCookies} from "react-cookie";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 
-interface MyPositionState {
-    position: GeolocationPosition | null
-    leader: boolean
 
-}
+export default function MyPosition() {
 
-interface MyPositionProps {
-    cookies: Cookies
-}
+    const leaderLabel = "Make me a leader"
 
-class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
+    const wss = useRef(null as WebSocket | null)
 
-    static propTypes = {
-        cookies: instanceOf(Cookies).isRequired
-    };
-    checkbox: HTMLInputElement | null
-    ws: WebSocket | null
-    // @ts-ignore
-    layerRef: RefObject<LayerGroup<any>>
-    controlRef: Control.Layers | null
-    readonly leaderLabel = "Make me a leader"
+    const [cookies, setCookie, removeCookie] = useCookies(["leader"]);
 
-    readonly options: PositionOptions = {
-        enableHighAccuracy: false,
-        timeout: 5000,
-        maximumAge: 0,
-    };
-
-    constructor(props: MyPositionProps) {
-        super(props);
-        this.state = {
-            position: { //todo remove
-                coords: {
-                    latitude: 53.200513,
-                    longitude: 50.193183,
-                    accuracy: 20,
-                    altitude: null,
-                    heading: null,
-                    speed: null,
-                    altitudeAccuracy: null
-                },
-                timestamp: 1687615933859
+    /*let {coords, isGeolocationAvailable, isGeolocationEnabled} =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: false,
             },
-            leader: this.props.cookies.get("leader") || false
+            userDecisionTimeout: 5000,
+        });*/
+
+    const [coords, setCoords] = useState({
+        latitude: 53.200513,
+        longitude: 50.193183,
+        accuracy: 20,
+        altitude: null,
+        heading: null,
+        speed: null,
+        altitudeAccuracy: null
+    } as GeolocationCoordinates)
+    const [interval, setIinterval] = useState(false)
+
+    const becomeLeader = (event: LeafletEvent) => {
+        setCookie("leader", true)
+    }
+
+    const leaveLeader = (event: LeafletEvent) => {
+        removeCookie("leader")
+        if (wss.current) {
+            wss.current?.close(1000, "User leave leader position")
+            wss.current = null
         }
-        this.ws = null
-        this.checkbox = null
-        this.layerRef = React.createRef()
-        this.controlRef = null
     }
 
-    errors = (err: GeolocationPositionError) => {
-        console.warn(`ERROR(${err.code}): ${err.message}`); //todo
-    }
 
-    connect = () => {
-        fetch("http://localhost:8080/GameEngines/Encounter/Play/{gameId}") //todo gameid
-            .then((response) => response.json())
-            .then((data) => this.connectWs(data.UserId as number));
-    }
-    connectWs = (userId: number) => {
-        const ws:WebSocket = new WebSocket(`ws://localhost:8080/users/${userId}`)
-        ws.onclose = (event: CloseEvent) => {
-            if (event.code === 1000 || event.code >= 4000) {
-                const {cookies} = this.props;
-                cookies.remove("leader");
-                this.setState({
-                    position: this.state.position,
-                    leader: false
-                })
-                this.ws = null;
-            } else { //todo error code??
-                this.ws = null
-                setTimeout(this.connect, 1000); //todo interval
+    useEffect(() => {
+        const connectWs = (userId: number) => {
+            const ws:WebSocket = new WebSocket(`ws://localhost:8080/users/${userId}`)
+            ws.onclose = (event: CloseEvent) => {
+                if (event.code === 1000 || event.code >= 4000) {
+                    removeCookie("leader")
+                    wss.current = null
+                } else { //todo error code??
+                   // setTimeout(connect, 1000); //todo interval
+                }
+            }
+            ws.onopen = (event: Event) => {
+                wss.current = ws
+            }
+            ws.onerror = (event: Event) => {
+                wss.current = null
+                //setTimeout(connect, 1000); //todo interval
             }
         }
-        ws.onopen = (event: Event) => {
-            this.ws = ws;
+        const connect = () => {
+            fetch("http://localhost:8080/GameEngines/Encounter/Play/{gameId}") //todo gameid
+                .then((response) => response.json())
+                .then((data) => connectWs(data.UserId as number));
         }
-        ws.onerror = (event: Event) => {
-            this.ws = null
-            setTimeout(this.connect, 1000); //todo interval
+        if (cookies.leader) {
+            connect()
         }
-    }
+    }, [cookies.leader, removeCookie])
 
-    sendCords = (cords: Array<number>) => {
-        if(this.ws) {
-            this.ws?.send(JSON.stringify(cords))
+    useEffect(() => {
+        const sendCords = (cords: Array<number>) => {
+            if (wss.current) {
+                wss.current?.send(JSON.stringify(cords))
+            }
         }
-    }
+        if (cookies.leader) {
+            sendCords([coords.latitude, coords.longitude])
+        }
+    }, [cookies.leader, coords])
 
-    becomeLeader = (event: LeafletEvent) => {
-        const {cookies} = this.props;
-        cookies.set("leader", true);
-        this.connect()
-        this.setState({
-            position: this.state.position,
-            leader: true
-        })
-    }
-
-    leaveLeader = (event: LeafletEvent) => {
-        const {cookies} = this.props;
-        cookies.remove("leader");
-        if (this.ws) {
-            this.ws?.close(1000, "User leave leader position")
-            this.ws = null
-        }
-    }
-
-    success = (pos: GeolocationPosition) => {
-        //if (this.state.leader) { //todo
-            this.setState({
-                position: pos
-            })
-        if (this.state.leader) {
-            this.sendCords([pos.coords.latitude, pos.coords.longitude])
-        }
-    }
-
-    componentDidMount() {
-        if (this.state.leader) {
-            this.connect()
-        }
-        if (navigator.geolocation) {
-            navigator.permissions
-                .query({name: "geolocation"})
-                .then((result) => {
-                    if (result.state === "granted") {
-                        //navigator.geolocation.watchPosition(this.success, this.errors, this.options);
-                    } else if (result.state === "prompt") {
-                        //navigator.geolocation.watchPosition(this.success, this.errors, this.options);
-                    } else if (result.state === "denied") {
-                        console.log(result.state);
-                    }
-                    result.onchange = function () {
-                        console.log(result.state);
-                    };
-                });
-        } else {
-            alert("Sorry Not available!");
-        }
-        setInterval(() => {
-            if (this.state.position) {
-                let pos: GeolocationPosition = {
-                    coords: {
-                        latitude: this.state.position.coords.latitude,
-                        longitude: this.state.position.coords.longitude + 0.0001,
-                        accuracy: this.state.position.coords.accuracy,
+    useEffect(() => {
+        if (!interval && cookies.leader) {
+            setIinterval(true)
+            setInterval(() => {
+                if (cookies.leader) {
+                    setCoords((prevCoords) => ({
+                        latitude: prevCoords.latitude,
+                        longitude: prevCoords.longitude + 0.001,
+                        accuracy: prevCoords.accuracy,
                         altitude: null,
                         heading: null,
                         speed: null,
                         altitudeAccuracy: null
-                    },
-                    timestamp: Date.now()
+                    }))
                 }
-                this.success(pos)
-            }
-        }, 100)
-        /*setTimeout(() => setInterval(() => {
-            if (this.state.position) {
-                let pos: GeolocationPosition = {
-                    coords: {
-                        latitude: this.state.position.coords.latitude + 0.0001,
-                        longitude: this.state.position.coords.longitude,
-                        accuracy: this.state.position.coords.accuracy,
-                        altitude: null,
-                        heading: null,
-                        speed: null,
-                        altitudeAccuracy: null
-                    },
-                    timestamp: Date.now()
-                }
-                this.success(pos)
-            }
-        }, 2000), 1000)*/
-    }
+            }, 1000)
+        }
+    }, [cookies.leader, coords, interval])
 
-    componentWillUnmount() {
-        this.ws?.close()
-    }
 
-    render() {
-        let pos = this.state.position ?
-            <LayerGroup eventHandlers={{add: this.becomeLeader, remove: this.leaveLeader}}>
-                <Circle
-                    center={new LatLng(this.state.position.coords.latitude, this.state.position.coords.longitude)}
-                    radius={this.state.position.coords.accuracy} className="myposition"/>
-                <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
-                    position={new LatLng(this.state.position.coords.latitude, this.state.position.coords.longitude)}/>
-            </LayerGroup> :
-            <LayerGroup/>
+    let pos = coords ? <LayerGroup eventHandlers={{add: becomeLeader, remove: leaveLeader}}>
+            <Circle
+                center={new LatLng(coords.latitude, coords.longitude)}
+                radius={coords.accuracy} className="myposition"/>
+            <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
+                    position={new LatLng(coords.latitude, coords.longitude)}/>
+        </LayerGroup> :
+        <LayerGroup eventHandlers={{add: becomeLeader, remove: leaveLeader}}/>
 
-        return <LayersControl position="topright" collapsed={false} >
-            <LayersControl.Overlay name={this.leaderLabel}
-                                   checked={this.state.leader}>
-                {pos}
-            </LayersControl.Overlay>
-        </LayersControl>
-    }
+    return <LayersControl position="topright" collapsed={false} >
+        <LayersControl.Overlay name={leaderLabel}
+                               checked={cookies.leader}>
+            {pos}
+        </LayersControl.Overlay>
+    </LayersControl>
 }
-
-export default withCookies(MyPosition);

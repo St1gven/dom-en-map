@@ -6,9 +6,9 @@ import {Team} from "./model/teams";
 export function TeamMarker(props: { team: Team }) {
 
     const [teamState, setTeam] = useState(props.team)
-    useEffect(() => {
-        console.log("rendered")
-    })
+    useEffect( () => {
+        setTeam(props.team)
+    }, [props.team])
 
     return <ImageOverlay key={teamState.name}
                          interactive={true}

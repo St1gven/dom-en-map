@@ -8,7 +8,8 @@ const root = ReactDOM.createRoot(
 );
 
 
-
 root.render(
-    <Map />
+    <React.StrictMode>
+        <Map/>
+    </React.StrictMode>
 );
