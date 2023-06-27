@@ -1,8 +1,9 @@
 import React, {RefObject} from "react";
 import {Circle, LayerGroup, LayersControl, Marker} from "react-leaflet";
-import {Control, LatLng, LeafletEvent} from "leaflet";
+import {Control, Icon, LatLng, LeafletEvent} from "leaflet";
 import {Cookies, withCookies} from "react-cookie";
 import {instanceOf} from "prop-types";
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
 
 interface MyPositionState {
     position: GeolocationPosition | null
@@ -59,8 +60,13 @@ class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
         console.warn(`ERROR(${err.code}): ${err.message}`); //todo
     }
 
-    connectWs = () => {
-        const ws:WebSocket = new WebSocket("ws://localhost:8080/users/1")
+    connect = () => {
+        fetch("http://localhost:8080/GameEngines/Encounter/Play/{gameId}") //todo gameid
+            .then((response) => response.json())
+            .then((data) => this.connectWs(data.UserId as number));
+    }
+    connectWs = (userId: number) => {
+        const ws:WebSocket = new WebSocket(`ws://localhost:8080/users/${userId}`)
         ws.onclose = (event: CloseEvent) => {
             if (event.code === 1000 || event.code >= 4000) {
                 const {cookies} = this.props;
@@ -72,7 +78,7 @@ class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
                 this.ws = null;
             } else { //todo error code??
                 this.ws = null
-                setTimeout(this.connectWs, 1000); //todo interval
+                setTimeout(this.connect, 1000); //todo interval
             }
         }
         ws.onopen = (event: Event) => {
@@ -80,7 +86,7 @@ class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
         }
         ws.onerror = (event: Event) => {
             this.ws = null
-            setTimeout(this.connectWs, 1000); //todo interval
+            setTimeout(this.connect, 1000); //todo interval
         }
     }
 
@@ -93,7 +99,7 @@ class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
     becomeLeader = (event: LeafletEvent) => {
         const {cookies} = this.props;
         cookies.set("leader", true);
-        this.connectWs()
+        this.connect()
         this.setState({
             position: this.state.position,
             leader: true
@@ -121,7 +127,7 @@ class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
 
     componentDidMount() {
         if (this.state.leader) {
-            this.connectWs()
+            this.connect()
         }
         if (navigator.geolocation) {
             navigator.permissions
@@ -187,7 +193,7 @@ class MyPosition extends React.Component<MyPositionProps, MyPositionState> {
                 <Circle
                     center={new LatLng(this.state.position.coords.latitude, this.state.position.coords.longitude)}
                     radius={this.state.position.coords.accuracy} className="myposition"/>
-                <Marker
+                <Marker icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
                     position={new LatLng(this.state.position.coords.latitude, this.state.position.coords.longitude)}/>
             </LayerGroup> :
             <LayerGroup/>
