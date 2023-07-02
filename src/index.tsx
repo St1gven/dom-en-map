@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Map from "./Map";
+import {StyledEngineProvider} from "@mui/material";
 
 const root = ReactDOM.createRoot(
     document.getElementById('map') as HTMLElement
@@ -10,6 +11,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <Map/>
+        <StyledEngineProvider injectFirst>
+            <Map/>
+        </StyledEngineProvider>
     </React.StrictMode>
 );

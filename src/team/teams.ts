@@ -2,7 +2,7 @@ import {createEvent, createStore} from "effector";
 
 export interface Team {
 
-    cords: number[];
+    coords: number[];
     name: string;
     flag: string;
 }
