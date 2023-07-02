@@ -54,17 +54,17 @@ code {
 .popup {
     position: absolute;
     width: 90%;
-    max-height: 58vh;
+    max-height: 70vh;
     background: rgba(0,0,0,.8);
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    z-index: 400;
+    z-index: 1000;
 }
 
 .popup-content {
     overflow-y: scroll;
-    max-height: 38vh;
+    max-height: 50vh;
 }
 
 .popup-avatar img {

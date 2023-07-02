@@ -20,7 +20,8 @@
     "@mui/icons-material": "^5.11.16",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "mui-image": "^1.0.7"
+    "mui-image": "^1.0.7",
+    "react-device-detect": "^2.2.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
