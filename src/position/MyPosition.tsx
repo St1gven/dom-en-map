@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Circle, LayerGroup, Marker} from "react-leaflet";
 import {Icon, LatLng} from "leaflet";
-import {useCookies} from "react-cookie";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {update} from "./position";
 import {useGeolocated} from "react-geolocated";
@@ -13,23 +12,23 @@ export default function MyPosition(props: {/*gameInfo: GameInfo*/}) {
 
     //const [cookies, setCookie, removeCookie] = useCookies(["leader"]);
 
-    // const {coords, isGeolocationAvailable, isGeolocationEnabled} =
-    //     useGeolocated({
-    //         positionOptions: {
-    //             enableHighAccuracy: false,
-    //         },
-    //         userDecisionTimeout: 5000,
-    //     });
+    const {coords, isGeolocationAvailable, isGeolocationEnabled} =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: false,
+            },
+            userDecisionTimeout: 5000,
+        });
 
-    const [coords] = useState({
-        latitude: 53.200513,
-        longitude: 50.197183,
-        accuracy: 20,
-        altitude: null,
-        heading: null,
-        speed: null,
-        altitudeAccuracy: null
-    } as GeolocationCoordinates)
+    // const [coords] = useState({
+    //     latitude: 53.200513,
+    //     longitude: 50.197183,
+    //     accuracy: 20,
+    //     altitude: null,
+    //     heading: null,
+    //     speed: null,
+    //     altitudeAccuracy: null
+    // } as GeolocationCoordinates)
     /*const [leader, setLeader] = useState(cookies.leader)
 
     const becomeLeader = () => {

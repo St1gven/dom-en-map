@@ -25,8 +25,7 @@ export default function InventoryPopup() {
 
     return opened ? <CloseablePopup onClose={closeInventory} title="Инвентарь">
         <ImageList variant="masonry" gap={8}>
-            {inventoryItems.map((item, index) => <ImageListItem key={index}
-                    onClick={() => window.open(item.url, "_blank")}>
+            {inventoryItems.map((item, index) => <ImageListItem key={index}>
                     <Image duration={0} src={item.url}/>
                     <ImageListItemBar style={{fontSize: 12}} title={item.name}/>
                 </ImageListItem>)}

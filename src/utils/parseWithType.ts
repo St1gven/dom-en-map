@@ -5,9 +5,11 @@ export interface WithType {
 
 export default function parseWithType<Type extends WithType>(type: string) {
     const helps = document.getElementById("ordinary_helps") as HTMLDivElement
-    const pItems = Array.from(helps.getElementsByTagName("p"))
+    const pItems = helps ? Array.from(helps.getElementsByTagName("p")) : []
     const bonuses = document.getElementById("bonuses") as HTMLDivElement
-    pItems.push(...bonuses.getElementsByTagName("p"))
+    if (bonuses) {
+        pItems.push(...bonuses.getElementsByTagName("p"))
+    }
 
     return Array.from(pItems).map((item: HTMLParagraphElement) => {
 

@@ -25,10 +25,10 @@ export default function MenuPlaceholder() {
 
     return <div>
         {!hover ?
-            <Card className="menu menu-hidden" onClick={(event) => {setHover(true); event.stopPropagation()}}>
+            <Card className="map-menu menu-hidden" onClick={(event) => {setHover(true); event.stopPropagation()}}>
                 <CardHeader title="Меню"/>
             </Card> :
-            <Card className="menu" onClick={event => event.stopPropagation()}>
+            <Card className="map-menu" onClick={event => event.stopPropagation()}>
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton onClick={() => {openInventory(); setHover(false);}}>

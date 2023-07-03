@@ -17,9 +17,6 @@ code {
     margin: 0;
 }
 
-.leaflet-container {
-    height: 80vh;
-}
 .team {
     border-radius: 100%;
 }
@@ -51,10 +48,41 @@ code {
 //    }
 //}
 
+
+.my-location {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    margin: 0 5px 15px 0;
+    background-color: rgba(0,0,0,.8);;
+}
+
+@media (max-device-height: 1025px) {
+    .popup {
+        max-height: 40vh;
+    }
+    .popup-content {
+        max-height: 30vh;
+    }
+    .leaflet-container {
+        height: 40vh;
+    }
+}
+
+@media (min-device-height: 1025px) {
+    .popup-content {
+        overflow-y: scroll;
+        max-height: 45vh;
+    }
+    .leaflet-container {
+        height: 700px;
+    }
+}
+
 .popup {
     position: absolute;
     width: 90%;
-    max-height: 70vh;
     background: rgba(0,0,0,.8);
     left: 50%;
     top: 50%;
@@ -64,7 +92,6 @@ code {
 
 .popup-content {
     overflow-y: scroll;
-    max-height: 50vh;
 }
 
 .popup-avatar img {
@@ -82,7 +109,7 @@ code {
     border-radius: 100%;
 }
 
-.menu {
+.map-menu {
     margin: 5px;
     padding: 0 5px 0 5px;
     position: absolute;
@@ -93,11 +120,11 @@ code {
 }
 
 .menu-hidden .MuiTypography-root {
-    font-size: 10px;
+    //font-size: 10px;
 }
 
 .menu-hidden .MuiCardHeader-root {
-    padding: 5px;
+    //padding: 5px;
 }
 
 .MuiImageListItemBar-title {
@@ -118,4 +145,17 @@ code {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.leaflet-attribution-flag {
+    display: none !important;
+    width: 0 !important;
+}
+
+.leaflet-control-attribution {
+    font-size: 10px;
+}
+
+#ordinary_helps {
+    display: none;
 }

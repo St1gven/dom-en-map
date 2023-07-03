@@ -85,7 +85,7 @@ export default function ItemPopup() {
                     Инвентарь
                 </Button> : null}
             </React.Fragment> : null}
-            {distanceReached && !isCorrect() ? <Stack alignItems="center">
+            {distanceReached && !isCorrect() ? <Stack>
                     <Typography>{item.task}</Typography>
                     <Typography><span style={{color: "yellow"}}>Примечание:</span> {item.note}</Typography>
                 </Stack>
