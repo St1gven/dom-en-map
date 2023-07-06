@@ -59,14 +59,11 @@ code {
 }
 
 @media (max-device-height: 1025px) {
-    .popup {
-        max-height: 40vh;
-    }
     .popup-content {
-        max-height: 30vh;
+        max-height: 50vh;
     }
     .leaflet-container {
-        height: 40vh;
+        height: 80vh;
     }
 }
 
@@ -107,6 +104,7 @@ code {
 
 .item {
     border-radius: 100%;
+    background: rgba(0,0,0,.8);
 }
 
 .map-menu {
@@ -120,11 +118,11 @@ code {
 }
 
 .menu-hidden .MuiTypography-root {
-    //font-size: 10px;
+    font-size: 1em;
 }
 
 .menu-hidden .MuiCardHeader-root {
-    //padding: 5px;
+    padding: 0.5em;
 }
 
 .MuiImageListItemBar-title {
@@ -157,5 +155,5 @@ code {
 }
 
 #ordinary_helps {
-    display: none;
+    //display: none;
 }

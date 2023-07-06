@@ -1,5 +1,5 @@
 import React from "react";
-import {MapContainer, TileLayer, useMap, useMapEvent, useMapEvents} from "react-leaflet";
+import {MapContainer, TileLayer, useMap, useMapEvent} from "react-leaflet";
 import MyPosition from "./position/MyPosition";
 import 'leaflet/dist/leaflet.css'
 import ItemPopup from "./items/ItemPopup";
@@ -53,7 +53,7 @@ export default function Map() {
         }}>
             <MapContainer center={cookies.center ? cookies.center : [53.200513, 50.197183]}
                           zoom={cookies.zoom ? cookies.zoom : 13}
-                          maxZoom={17}>
+                          maxZoom={16}>
                 <TileLayer
                     attribution='<a href="http://stamen.com">Stamen Design</a> | <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> | &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | st1gven'
                     url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"

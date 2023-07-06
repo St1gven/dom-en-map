@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Circle, LayerGroup, Marker} from "react-leaflet";
 import {Icon, LatLng} from "leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -21,8 +21,8 @@ export default function MyPosition(props: {/*gameInfo: GameInfo*/}) {
         });
 
     // const [coords] = useState({
-    //     latitude: 53.200513,
-    //     longitude: 50.197183,
+    //     latitude: 53.210513,
+    //     longitude: 50.207183,
     //     accuracy: 20,
     //     altitude: null,
     //     heading: null,

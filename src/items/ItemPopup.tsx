@@ -1,6 +1,6 @@
 import {useStore} from "effector-react";
 import {$selected, close, Item} from "./items";
-import {Button, Grid, IconButton, Input, Link, Stack, Typography} from "@mui/material";
+import {Button, IconButton, Input, Link, Stack, Typography} from "@mui/material";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import PublishIcon from '@mui/icons-material/Publish';
 import React, {useRef} from "react";
@@ -21,16 +21,15 @@ export default function ItemPopup() {
     const submitAnswer = () => {
         const val = inputRef.current?.value
 
-        if (val) {
+        if (val && item) {
             const answer = document.getElementById("Answer") as HTMLInputElement
-            answer.value = val
+            answer.value = `${item?.name} ${val}`
             const form = answer.parentElement as HTMLFormElement
             form.submit()
         }
     }
 
     const goToInventory = () => {
-        closePopup()
         openInventory()
     }
 
@@ -53,8 +52,12 @@ export default function ItemPopup() {
             return item.type === 'answer'
         }
         const calculateDistance = () => {
+            console.log(position)
             if (position) {
-                return getDistance(position, {
+                return getDistance({
+                    latitude: position.latitude,
+                    longitude: position.longitude
+                }, {
                     latitude: item.coords[0],
                     longitude: item.coords[1]
                 });
@@ -62,7 +65,7 @@ export default function ItemPopup() {
         }
 
         const distance = calculateDistance()
-        const distanceReached = distance !== undefined ? distance < 100 : false
+        const distanceReached = distance !== undefined ? distance < 500 : false
         //todo android href
         const coordsLink = <React.Fragment>
             <Link style={{verticalAlign: "bottom"}}
@@ -88,13 +91,17 @@ export default function ItemPopup() {
             {distanceReached && !isCorrect() ? <Stack>
                     <Typography>{item.task}</Typography>
                     <Typography><span style={{color: "yellow"}}>Примечание:</span> {item.note}</Typography>
+                    <Stack direction="row">
+                        <Input inputRef={inputRef} fullWidth placeholder="Введите ответ" type="text"/>
+                        <IconButton onClick={submitAnswer}><PublishIcon/></IconButton>
+                    </Stack>
                 </Stack>
                 : null}
-            {!distanceReached && !isCorrect() ? <Typography><span style={{color: "red"}}>Подъедьте ближе чтобы узнать задание</span></Typography> : null}
-            {!isCorrect() ? <Stack direction="row">
-                <Input inputRef={inputRef} fullWidth placeholder="Введите ответ" type="text"/>
-                <IconButton onClick={submitAnswer}><PublishIcon/></IconButton>
-            </Stack> : null}
+            {!distanceReached && !isCorrect() ?
+                <Typography>
+                    <span style={{color: "red"}}>Подъедьте ближе чтобы узнать задание. Дистанция: {distance}</span>
+                </Typography> : null
+            }
         </CloseablePopup>
     }
     return null

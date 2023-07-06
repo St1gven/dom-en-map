@@ -10,14 +10,17 @@ export default function FromPageItemMarkers() {
         const items: Item[] = parseWithType("sector")
         const answers: Item[] = parseWithType("answer")
         const finalItems = items.map(item => {
-            const answer = answers.find((answer) => answer.name === item.name)
-            if (answer) {
+            const ind = answers.findIndex((answer) => answer.name === item.name)
+            if (ind > -1) {
+                const answer = answers[ind]
+                answers.splice(ind, 1)
                 answer.coords = item.coords
                 answer.url = item.url
                 return answer
             }
             return item
         })
+        finalItems.push(...answers)
         create(finalItems)
 
         const cols = document.getElementsByClassName("cols w100per") as HTMLCollectionOf<HTMLDivElement>
