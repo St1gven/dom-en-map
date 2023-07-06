@@ -16,13 +16,16 @@ export default function parseWithType<Type extends WithType>(type: string) {
         if (item.innerText) {
             const arr = item.innerText.split(/\n/)
             return arr.map((text) => {
-                const itemWithType = JSON.parse(text) as WithType
-                if (itemWithType.type === type) {
-                    return itemWithType as Type
+                try {
+                    const itemWithType = JSON.parse(text) as WithType
+                    if (itemWithType.type === type) {
+                        return itemWithType as Type
+                    }
+                } catch (e) {
+                    console.log("Failed to parse '", text, "'", e)
                 }
                 return null
             })
-
         }
         return []
     }).flat().filter((element): element is Type => !!element)

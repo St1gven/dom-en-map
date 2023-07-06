@@ -3,16 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Map from "./Map";
 import {StyledEngineProvider} from "@mui/material";
-
-const root = ReactDOM.createRoot(
-    document.getElementById('map') as HTMLElement
-);
+import FirstLevel from "./first_level/FirstLevel";
 
 
-root.render(
-    <React.StrictMode>
-        <StyledEngineProvider injectFirst>
-            <Map/>
-        </StyledEngineProvider>
-    </React.StrictMode>
-);
+const mapDiv = document.getElementById('map') as HTMLElement
+if (mapDiv) {
+    const root = ReactDOM.createRoot(mapDiv);
+
+    root.render(
+        <React.StrictMode>
+            <StyledEngineProvider injectFirst>
+                <Map/>
+            </StyledEngineProvider>
+        </React.StrictMode>
+    );
+} else {
+    const yesno = document.getElementById('yesno') as HTMLElement
+    if (yesno) {
+        const root = ReactDOM.createRoot(yesno);
+        root.render(<React.StrictMode>
+            <FirstLevel/>
+        </React.StrictMode>)
+    }
+}

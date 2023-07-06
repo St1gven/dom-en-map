@@ -1,0 +1,212 @@
+<table align="center" cellpadding="0" cellspacing="0" width="100%" height="100%">
+  <tbody><tr><td align="center">
+
+    <table align="center" border="0">
+      <tbody><tr><td align="center">
+
+        <table cellpadding="0" cellspacing="0" height="400" width="500" style="background: url(&#39;https://cdn.endata.cx/images/v2/en/old/end_game_brg.gif&#39;) no-repeat center center">
+          <tbody><tr><td align="center" valign="middle" style="padding-left:10; padding-right:10">
+
+
+            <table id="GameCongratulation_Encorners1_mainTable" border="0" cellpadding="0" cellspacing="0">
+              <tbody><tr>
+                <td><img src="https://cdn.endata.cx/images/v2/en/old/empty.gif" width="1" height="1"></td>
+                <td><img src="https://cdn.endata.cx/images/v2/en/old/line_h_l_78.gif" width="78" height="1"></td>
+                <td align="right"><img src="https://cdn.endata.cx/images/v2/en/old/line_h_r_78.gif" width="78" height="1"></td>
+                <td><img src="https://cdn.endata.cx/images/v2/en/old/empty.gif" width="1" height="1"></td>
+              </tr>
+              <tr>
+                <td valign="top"><img src="https://cdn.endata.cx/images/v2/en/old/line_v_u_60.gif" width="1" height="60"></td>
+                <td colspan="2" rowspan="2">
+                  <table id="GameCongratulation_Encorners1_innerTable" width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tbody><tr><td>
+
+
+
+
+                      <center class="gameCongratulation">
+                        <br><br>
+                        <font size="+2"><span id="animate">Поздравляем!!!</span></font>
+                        <br>
+                        <br><br>
+                        <font size="+1" color="white">
+
+                          <div class="t_center">
+                            Вы пришли к финишу <b>1-ым</b>!						</div>
+                          <br>
+                          <br>
+                          Ваше итоговое место и количество заработанных очков вы узнаете после подведения результатов игры.
+
+                        </font>
+                        <br><br>
+                        <br>
+                        <br><br>
+                      </center>
+
+
+
+                    </td></tr>
+                    </tbody></table>
+                </td>
+                <td valign="top"><img src="https://cdn.endata.cx/images/v2/en/old/line_v_u_60.gif" width="1" height="60"></td>
+              </tr>
+              <tr>
+                <td valign="bottom"><img src="https://cdn.endata.cx/images/v2/en/old/line_v_d_72.gif" width="1" height="72"></td>
+                <td valign="bottom"><img src="https://cdn.endata.cx/images/v2/en/old/line_v_d_72.gif" width="1" height="72"></td>
+              </tr>
+              <tr>
+                <td><img src="https://cdn.endata.cx/images/v2/en/old/empty.gif" width="1" height="1"></td>
+                <td><img src="https://cdn.endata.cx/images/v2/en/old/line_h_l_78.gif" width="78" height="1"></td>
+
+                <td align="right"><img src="https://cdn.endata.cx/images/v2/en/old/line_h_r_78.gif" width="78" height="1"></td>
+                <td><img src="https://cdn.endata.cx/images/v2/en/old/empty.gif" width="1" height="1"></td>
+              </tr>
+              </tbody></table>
+
+
+
+
+
+
+            <div class="padT10">
+              <a href="https://ne.en.cx/" style="color: #f90;">На главную</a> | <a href="https://ne.en.cx/GameStat.aspx?gid=76307" style="color: #f90;" target="_blank">Статистика</a> | <a href="https://ne.en.cx/Guestbook/Messages.aspx?topic=333721" style="color: #f90;">Обсуждение</a>
+            </div>
+
+          </td></tr>
+          </tbody></table>
+      </td></tr>
+      </tbody></table>
+
+  </td></tr>
+  </tbody></table>
+<script type="text/javascript">
+  //<![CDATA[
+  var colors = new Array('blue', 'yellow', 'green', 'red', 'white');
+  var text = new String(document.getElementById('animate').innerHTML);
+  var i = 0;
+  function Animate() {
+    var dest_text = "";
+    for (var j = 0; j < text.length; j++, i++) {
+      if (i >= colors.length) i = 0;
+      dest_text += '<font color="' + colors[i] + '">' + text.charAt(j) + '</font>';
+    }
+    if (dest_text.length <= 0) return;
+    document.getElementById("animate").innerHTML = '<font size="+3">' + dest_text + '</font>';
+    setTimeout("Animate()", 200);
+  }
+  Animate();
+
+  ////////////////////////////////////
+  ///// FIREWORKS
+  //////////////////////////////////
+  ////////////////////////////////////////////////////////////////
+  // Javascript made by Rasmus Petersen - http://www.peters1.dk //
+  ////////////////////////////////////////////////////////////////
+
+  var FIRE_Path = "https://world.en.cx/js/firework/"; // Path to the directory containing the firework-pictures
+  var FIRE_no = 10; // Numbers of Rockets in one firework
+  var FIRE_Pause = 3; // Pause between the fireworks in seconds
+  var FIRE_SameColor = false; // If true = The rockets have the same color in one firework
+
+  var FIRE_Time, FIRE_Bang, FIRE_Vindue_Width, FIRE_Vindue_Height;
+  var FIRE_PosLeft, FIRE_PosTop, FIRE_PosVenAfv, FIRE_PosTopAfv;
+  var i;
+  var FIRE_j = 0;
+
+  var FIRE_browser_IE_NS = (document.body.clientHeight) ? 1 : 0;
+  var FIRE_browser_MOZ = (self.innerWidth) ? 1 : 0;
+
+  if (FIRE_browser_IE_NS) {
+    FIRE_Vindue_Width = document.body.clientWidth;
+    FIRE_Vindue_Height = document.body.clientHeight;
+  }
+  else if (FIRE_browser_MOZ) {
+    FIRE_Vindue_Width = self.innerWidth - 20;
+    FIRE_Vindue_Height = self.innerHeight;
+  }
+
+  var FIRE_Top = 10;
+  var FIRE_Bot = FIRE_Vindue_Height - 40;
+  var FIRE_Mid = FIRE_Vindue_Width / 2;
+
+  FIRE_PosLeft = new Array();
+  FIRE_PosTop = new Array();
+  FIRE_PosVenAfv = new Array();
+  FIRE_PosTopAfv = new Array();
+  FIRE_Time = new Array();
+  FIRE_TopBang = new Array();
+  FIRE_Billede = new Array();
+  FIRE_Farve = new Array("orange", "blue", "yellow", "red", "green");
+  FIRE_Pause = FIRE_Pause * 1000;
+
+  for (i = 0; i < FIRE_no; ++i) {
+    FIRE_TopBang[i] = FIRE_Top + Math.random() * 200;
+    FIRE_PosTop[i] = FIRE_Bot;
+    FIRE_PosTopAfv[i] = 0;
+    FIRE_PosLeft[i] = FIRE_Mid;
+    if (i % 2 == 0) FIRE_PosVenAfv[i] = 4 * Math.random();
+    else FIRE_PosVenAfv[i] = Math.random() * (-4);
+    document.write("<\div id=\"FIRE_no" + i + "\" style=\"position: absolute; font-size: 15px; z-index: " + i + "; visibility: visible; top: " + FIRE_PosTop[i] + "px; left: " + FIRE_PosLeft[i] + "px;\"><a href=\"http://www.peters1.dk\" target=\"_blank\"><b>.</b></a><\/div>");
+  }
+  document.close()
+
+
+  function FIRE_Op(FIRE_number) {
+    if (FIRE_PosTop[FIRE_number] > (FIRE_Top + FIRE_TopBang[FIRE_number])) {
+      FIRE_PosTop[FIRE_number] = FIRE_PosTop[FIRE_number] - FIRE_PosTopAfv[FIRE_number];
+      FIRE_PosLeft[FIRE_number] = FIRE_PosLeft[FIRE_number] + FIRE_PosVenAfv[FIRE_number];
+      FIRE_PosTopAfv[FIRE_number] = (FIRE_PosTop[FIRE_number] / 40);
+      document.getElementById("FIRE_no" + FIRE_number).style.top = FIRE_PosTop[FIRE_number] + "px";
+      document.getElementById("FIRE_no" + FIRE_number).style.left = FIRE_PosLeft[FIRE_number] + "px";
+      FIRE_Time[i] = setTimeout("FIRE_Op(" + FIRE_number + ")", 10);
+    }
+    else {
+      clearTimeout("FIRE_Time[" + FIRE_number + "]");
+      FIRE_ShowBang(FIRE_number);
+    }
+  }
+
+  function FIRE_Start() {
+
+    if (FIRE_SameColor) {
+      if (FIRE_j == 4) FIRE_j = 0;
+      else FIRE_j = FIRE_j + 1;
+    }
+
+    for (i = 0; i < FIRE_no; i++) {
+      if (!FIRE_SameColor) {
+        FIRE_j = Math.round(Math.random() * 4);
+      }
+      FIRE_Billede[i] = FIRE_Path + FIRE_Farve[FIRE_j] + ".gif";
+      document.getElementById("FIRE_no" + i).innerHTML = "<b>*</b>";
+      document.getElementById("FIRE_no" + i).style.color = FIRE_Farve[FIRE_j];
+      setTimeout("FIRE_Op(" + i + ")", (1500 * Math.random()));
+    }
+  }
+
+  function FIRE_ShowBang(FIRE_number) {
+    if (FIRE_number == 0) document.getElementById("FIRE_no" + FIRE_number).innerHTML = "<a href=\"http://www.peters1.dk\" target=\"_blank\"><\img src=\"" + FIRE_Billede[FIRE_number] + "\" border=\"0\" /></a>";
+    else document.getElementById("FIRE_no" + FIRE_number).innerHTML = "<\img src=\"" + FIRE_Billede[FIRE_number] + "\" border=\"0\" />";
+    document.getElementById("FIRE_no" + FIRE_number).style.top = (FIRE_PosTop[FIRE_number] - 20) + "px";
+    document.getElementById("FIRE_no" + FIRE_number).style.left = (FIRE_PosLeft[FIRE_number] - 40) + "px";
+    setTimeout("FIRE_Reset(" + FIRE_number + ")", 1000)
+  }
+
+  function FIRE_Reset(FIRE_number) {
+    FIRE_TopBang[FIRE_number] = FIRE_Top + Math.random() * 100;
+    FIRE_PosTop[FIRE_number] = FIRE_Bot;
+    FIRE_PosTopAfv[FIRE_number] = 4;
+    FIRE_PosLeft[FIRE_number] = FIRE_Mid;
+    if (FIRE_number % 2 == 0) FIRE_PosVenAfv[FIRE_number] = 4 * Math.random();
+    else FIRE_PosVenAfv[FIRE_number] = Math.random() * (-4);
+
+    document.getElementById("FIRE_no" + FIRE_number).innerHTML = "";
+    document.getElementById("FIRE_no" + FIRE_number).style.top = FIRE_PosTop[FIRE_number] + "px";
+    document.getElementById("FIRE_no" + FIRE_number).style.left = FIRE_PosLeft[FIRE_number] + "px";
+
+    if (FIRE_number == FIRE_no - 1) setTimeout("FIRE_Start()", FIRE_Pause);
+  }
+
+  FIRE_Start();
+  //]]>
+</script>
