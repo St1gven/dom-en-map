@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Circle, LayerGroup, Marker} from "react-leaflet";
 import {Icon, LatLng} from "leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
@@ -12,7 +12,7 @@ export default function MyPosition(props: {/*gameInfo: GameInfo*/}) {
 
     //const [cookies, setCookie, removeCookie] = useCookies(["leader"]);
 
-    const {coords, isGeolocationAvailable, isGeolocationEnabled} =
+    const {coords} =
         useGeolocated({
             positionOptions: {
                 enableHighAccuracy: false,
