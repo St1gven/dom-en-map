@@ -154,6 +154,10 @@ code {
     font-size: 10px;
 }
 
-#ordinary_helps {
-    //display: none;
+#ordinary_helps, #bonuses, .aside {
+    display: none;
+}
+
+.content {
+    margin-left: 0;
 }

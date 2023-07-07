@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -38,19 +39,19 @@
   <div class="header">
     <a href="/" class="logo"><img src="https://cdn.endata.cx/images/v2/en/engines/enlogo.png" width="60" height="60" title="Encounter сеть городских игр — квест, фотоигра, мозговой штурм, викторина." alt="Encounter сеть городских игр — квест, фотоигра, мозговой штурм, викторина."></a>
     <img src="https://cdn.endata.cx/images/v2/en/engines/types/type0.gif" class="gametype" width="30" height="30" title="Схватка (командная)" alt="Схватка (командная)" />
-    <h1><a href="/GameDetails.aspx?gid=75300" id="lblGameTitle">Новогодняя Дичь</a></h1>
+    <h1><a href="/GameDetails.aspx?gid=76307" id="lblGameTitle">Ne Детектив |Точки</a></h1>
 
 
 
     <ul>
       <li class="refresh">
-        <a href="/admin/games/levels/preview/75300/?level=1&amp;rnd=0,525497240259078"><i></i><span>Обновить</span></a>
+        <a href="/admin/games/levels/preview/76307/?level=2&amp;rnd=0,119572370834449"><i></i><span>Обновить</span></a>
       </li>
       <li class="stats">
-        <a href="/GameStat.aspx?gid=75300" target="_blank"><i></i><span>Статистика</span></a>
+        <a href="/GameStat.aspx?gid=76307" target="_blank"><i></i><span>Статистика</span></a>
       </li>
       <li class="discuss">
-        <a href="/guestbook/messages.aspx?topic=329961"><i></i><span>Обсуждение</span></a>
+        <a href="/guestbook/messages.aspx?topic=333721"><i></i><span>Обсуждение</span></a>
       </li>
 
       <li class="design">
@@ -81,14 +82,12 @@
 
 
 
-  <p class="globalmess">
-  </p>
 
   <div class="aside hasChat">
     <a id="lnkAnswerBoxMarker"></a>
     <form method="post" class="answers_form">
-      <input type="hidden" name="LevelId" value="1423883" />
-      <input type="hidden" name="LevelNumber" value="1" />
+      <input type="hidden" name="LevelId" value="1430899" />
+      <input type="hidden" name="LevelNumber" value="2" />
       <input type="text" id="Answer" name="LevelAction.Answer" maxlength="4000" tabindex="1" hint="Введите ответ или код и нажмите Enter" autocomplete="off" value="" />
       <input type="submit" class="submit" value ="&gt;&gt;" />
 
@@ -98,7 +97,17 @@
     <div class="pane" id="this">
       <ul class="history">
 
+        <li class="color_correct">Ответ или код верный</li>
 
+        <li class="correct">
+          19:22:21
+
+          <a href="/userdetails.aspx?uid=1663168">st1gven</a>
+
+          <span class="color_bonus">
+						ластер
+					</span>
+        </li>
       </ul>
     </div>
 
@@ -108,13 +117,13 @@
   <div class="content">
 
 
-    <h2>Уровень <span>1</span> из 1</h2>
+    <h2>Уровень <span>2</span> из 9</h2>
 
     <div class="preview_wrapper">
       <div class="preview switch-modes">
         <label class="label"><i></i></label>
         <div class="block first">
-          <a href="/admin/games/levels/adminpreview/75300/?level=1" class="js" id="switch-mode-authors">Режим автора</a>
+          <a href="/admin/games/levels/adminpreview/76307/?level=2" class="js" id="switch-mode-authors">Режим автора</a>
         </div>
         <div class="block">
           <a href="javascript:void(0)" class="caption" id="switch-mode-players">Режим игрока</a>
@@ -123,38 +132,25 @@
     </div>
 
     <div class="spacer"></div>
-    <h3>На уровне 2 сектора
-      <span class="color_sec">(осталось закрыть 1)</span>
-    </h3>
-    <div class="cols-wrapper">
-      <div class="cols w100per">
+    <h3 class="timer">
+      <strong>Автопереход</strong> на следующий уровень через&nbsp;<span class="bold_off" id="time61682668">1 час 59 минут</span><script type="text/javascript">
+      //<![CDATA[
+      window.time61682668 = new Timer({"days":["дн","дн","дн"],"hours":["ч","ч","ч"],"minutes":["м","м","м"],"seconds":["с","с","с"],"StartCounter":7200,"TimeDirection":"Down","ShowTimeUnits":true,"TimerTextID":"time61682668","DisplayTwoTimes":false}, function(timer, seconds) { if (seconds > 0) return true; window.location = '/admin/games/levels/preview/76307/?level=2&start=63824340141590'; });
+      //]]>
+    </script>	</h3>
 
-        <p>1: <span class="color_correct">1</span> <span class="color_sec">(29.06.2023 23:47:36 <a href="/UserDetails.aspx?uid=1663168">st1gven</a>)</span></p>
-        <p>2: <span class="color_correct">1</span> <span class="color_sec">(29.06.2023 23:47:36 <a href="/UserDetails.aspx?uid=1663168">st1gven</a>)</span></p>
-        <p>3: <span class="color_dis">код не введён</span></p>
-      </div><!--end cols-->
-    </div><!--end cols-wrapper -->
-
-    <div class="spacer"></div>
     <div class="spacer"></div>
     <h3>Задание</h3>
     <div class="task">
-      <div id="map" class="bootstrap-container"></div>
+      <p>
+      <div id="map"></div></p>
     </div>
-
 
     <div id="ordinary_helps">
       <div class="spacer"></div>
-      <p>{"content" :"Место брифа будет указано позднее", "type": "task"}</p>
-      <p>{"name" :"Смартфон", "type": "inventory", "url": "https://avatars.mds.yandex.net/i?id=6c5b7e14fa6824595a2d1cd7924b5fa5-4145875-images-thumbs&n=13"}</p>
-      <p>{"name" :"Машина", "type": "inventory", "url": "https://i.pinimg.com/originals/7b/5d/2a/7b5d2a9602ad4e594578393bb553c7b9.png"}</p>
-      <p>{"name" :"5 детективов", "type": "inventory", "url": "https://gl-img.rg.ru/uploads/images/2018/02/18/a707fb79b56eca7.jpg"}</p>
-      <p>{"name" :"Блокнот с ручкой", "type": "inventory", "url": "https://hcmediaista.files.wordpress.com/2015/03/pen-handwriting-ftr1.jpg?w=1200"}</p>
-      <p>{"name" :"Еще что-то", "type": "inventory", "url": "https://avatars.mds.yandex.net/i?id=17099fd8d78b2575b1fe7881d19b7714419dcb99-6297400-images-thumbs&n=13"}</p>
-      <p>{"coords": [53.200513, 50.207183], "url": "https://i.pinimg.com/originals/6a/6c/40/6a6c40e73b7e106f1ff428f8b0587c8d.png", "type": "sector", "name":"Дом девочки", "task": "Вы подьезжаете чтото там", "note": "где искать(на столбе, на остановке...)"}</p>
+      <h3>Подсказка 1</h3>
+      <p></p>
     </div>
-
-
 
 
     <div id="penalty_helps">
@@ -163,22 +159,138 @@
 
     <div id="bonuses">
 
-      <h3 class="bonus_count">На уровне 2 бонуса </h3>
-      <span class="bonus_count color_sec">(Выполненные - 1)</span>
+      <h3 class="bonus_count">На уровне 31 бонус </h3>
+      <span class="bonus_count color_sec">(Выполненные - 0)</span>
       <div class="spacer"></div>
       <h3 class="color_correct">
-        Бонус 1: 5
-        <span class="color_sec">(выполнен)</span>
+        Бонус 1: инф1
+        <span class="color_sec">(выполнен, награда 1 минуту)</span>
       </h3>
-      <p>{"type": "answer", "inventory": true, "name":"Дом девочки", "task": "Осмотрев комнату, вы находите листок бумаги из дневника, в нем что-то неразборчиво написано", "note": "где искать(на столбе, на остановке...)"}</p>
-      <p>{"coords": [53.210513, 50.207183],"type": "sector", "name": "haha"}</p>
-      <p>{"name" :"Дневник девочки", "type": "inventory", "url": "https://i.pinimg.com/originals/6a/6c/40/6a6c40e73b7e106f1ff428f8b0587c8d.png", "openAfter": "3"}</p>
-      <p><br />{}</p>
-      <p>{"content" :"Найти газету", "type": "task"}</p>
+      <p>{"type": "answer", "name" :"Продавщица цветочного магазина", "coords": [53.20987, 50.17318], "task": "Прошли слухи что сгорел дом, возможно были жертвы", "url": "https://d1.endata.cx/data/games/76307/цвет.jpg" }<br />{"type": "sector", "name" :"Сгоревший Дом", "coords": [53.19705, 50.18455], "task": "Проедем на место пожара", "note": "Код на фонарном столбе" }</p>
       <div class="spacer"></div>
       <h3 class="color_bonus">
-        Бонус 2: 6
+        Бонус 2: инф2
       </h3>
+      <p>{"type": "sector", "name" :"Сотрудник Росгвардии", "coords": [53.22726, 50.19522], "task": "У каждого детектива есть связи в полиции, узнаем у знакомого сотрудника, было ли что-то необычное последнее время. Он сейчас на патрулировании, как раз недалеко", "note": "Код на стенде объявлений" }</p>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 3: Полиция1
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 4: Полиция2
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 5: Полиция3
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 6: Полиция4
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 7: Сгоревший дом
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 8: СоседГен
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 9: СоседТим
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 10: Стоянка3
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 11: Стоянка5
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 12: Стоянка7
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 13: Морг
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 14: Квартира
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 15: Школа
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 16: Учитель 1
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 17: Подруга1
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 18: Подруга2
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 19: Магаз1
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 20: Магаз2
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 21: Бойфренд
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 22: Сизо
+      </h3>
+      <p>{"type": "sector", "name" :"Сизо", "coords": [53.21068, 50.15097], "task": "Здесь держат подозреваемого", "note": "Код на серой стене, слева" }</p>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 23: Оптика
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 24: Адвокат
+      </h3>
+      <p>{"type": "sector", "name" :"Адвокат", "coords": [53.19071, 50.17036], "task": "Государственный адвокат, который занимается этим делом", "note": "Код на столбе посередине парковки" }</p>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 25: Пожарные
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 26: Подруга3
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 27: Учитель 2
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 28: Отчим
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 29: Бабушка
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 30: Сосед3
+      </h3>
+      <div class="spacer"></div>
+      <h3 class="color_bonus">
+        Бонус 31: Финиш
+      </h3>
+      <p>{"type": "sector", "name" :"Финиш", "coords": [53.21485, 50.18535], "task": "Финишная точка, если знаете ответы на все вопросы", "note": "Код у агента", "url": "https://d1.endata.cx/data/games/76307/Финиш.png" }</p>
     </div>
   </div>
   <!--/content-->

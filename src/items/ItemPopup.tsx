@@ -52,7 +52,6 @@ export default function ItemPopup() {
             return item.type === 'answer'
         }
         const calculateDistance = () => {
-            console.log(position)
             if (position) {
                 return getDistance({
                     latitude: position.latitude,

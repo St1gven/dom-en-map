@@ -14,7 +14,8 @@ export default function parseWithType<Type extends WithType>(type: string) {
     return Array.from(pItems).map((item: HTMLParagraphElement) => {
 
         if (item.innerText) {
-            const arr = item.innerText.split(/\n/)
+
+            const arr = item.innerText.split(/\n|(?<=})\s*(?={)/)
             return arr.map((text) => {
                 try {
                     const itemWithType = JSON.parse(text) as WithType

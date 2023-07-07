@@ -37,12 +37,20 @@ export default function FirstLevel() {
         }
     }
 
-    return <Stack direction="row" gap={2}>
+    let foundCorrect = false
+    const correctList = document.getElementsByClassName("color_bonus") as HTMLCollectionOf<HTMLSpanElement>
+    for (const correct of correctList) {
+        if (correct.textContent?.trim() === "OH YEAH") {
+            foundCorrect = true
+        }
+    }
+    return !foundCorrect ? <Stack direction="row" gap={2}>
         <Button variant="outlined" onClick={submitYes}>
             Да
         </Button>
         <Button variant="outlined" onClick={submitNo}>
             Нет
         </Button>
-    </Stack>
+    </Stack> : null
+
 }

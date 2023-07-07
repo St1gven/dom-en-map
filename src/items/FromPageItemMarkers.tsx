@@ -9,18 +9,24 @@ export default function FromPageItemMarkers() {
     useEffect(() => {
         const items: Item[] = parseWithType("sector")
         const answers: Item[] = parseWithType("answer")
+        const removeAnswers = [] as number[]
         const finalItems = items.map(item => {
             const ind = answers.findIndex((answer) => answer.name === item.name)
             if (ind > -1) {
                 const answer = answers[ind]
-                answers.splice(ind, 1)
-                answer.coords = item.coords
-                answer.url = item.url
+                removeAnswers.push(ind)
+                if (!answer.coords) {
+                    answer.coords = item.coords
+                }
+                if (!answer.url) {
+                    answer.url = item.url
+                }
                 return answer
             }
             return item
         })
-        finalItems.push(...answers)
+
+        finalItems.push(...answers.filter( (answer, index) => !removeAnswers.includes(index)))
         create(finalItems)
 
         const cols = document.getElementsByClassName("cols w100per") as HTMLCollectionOf<HTMLDivElement>
