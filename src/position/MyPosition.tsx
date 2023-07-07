@@ -17,6 +17,7 @@ export default function MyPosition(props: {/*gameInfo: GameInfo*/}) {
             positionOptions: {
                 enableHighAccuracy: false,
             },
+            watchPosition: true,
             userDecisionTimeout: 5000,
         });
 
