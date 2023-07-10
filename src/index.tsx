@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import Map from "./Map";
 import {StyledEngineProvider} from "@mui/material";
 import FirstLevel from "./first_level/FirstLevel";
