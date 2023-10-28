@@ -117,6 +117,20 @@ code {
     z-index: 400;
 }
 
+.stats-menu {
+    margin: 5px;
+    padding: 0 5px 0 5px;
+    position: absolute;
+    background: rgba(0,0,0,.8);
+    left: 0;
+    bottom: 0;
+    z-index: 400;
+}
+
+.zone {
+    filter: blur(0.5em);
+}
+
 .menu-hidden .MuiTypography-root {
     font-size: 1em;
 }

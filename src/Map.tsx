@@ -13,6 +13,9 @@ import MyLocationOutlinedIcon from '@mui/icons-material/MyLocationOutlined';
 import {useStore} from "effector-react";
 import {$position} from "./position/position";
 import {LatLng} from "leaflet";
+import StatsPlaceholder from "./menu/StatsPlaceholder";
+import {Donut} from "./utils/donut/Donut";
+
 
 function MapHandler() {
 
@@ -46,6 +49,7 @@ export default function Map() {
         },
     });
 
+    const zone = 2000
     //if (gameInfo) {
     return <ThemeProvider theme={darkTheme}>
         <div style={{
@@ -60,11 +64,15 @@ export default function Map() {
                 />
                 {/*<TeamMarkers gameInfo={gameInfo}/>*/}
                 <FromPageItemMarkers/>
+                <Donut radius={20000} innerRadius={zone} interactive={false}
+                       fillColor="black" fillOpacity={0.2} weight={0} className="zone"
+                       center={new LatLng(53.19071, 50.17036)} />
                 <MyPosition/>
                 <MapHandler/>
             </MapContainer>
             <ItemPopup/>
             <MenuPlaceholder/>
+            <StatsPlaceholder/>
             <InventoryPopup/>
 
             <TaskPopup/>

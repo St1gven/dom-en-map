@@ -22,46 +22,40 @@ export function ItemMarker(props: { item: Item }) {
         }
     }, [cookies.selectedItem, props.item])
 
-
     const map = useMap();
     const showTriangle = map.getZoom() > 14
     const triangleSize = 70
     const itemSize = showTriangle ? 250 : 300
     const triangleBounds = new LatLng(props.item.coords[0], props.item.coords[1]).toBounds(triangleSize)
-    const largeBounds = new LatLng(props.item.coords[0], props.item.coords[1]).toBounds(itemSize + triangleSize*1.4)
+    const largeBounds = new LatLng(props.item.coords[0], props.item.coords[1]).toBounds(itemSize + triangleSize * 1.4)
     const itemCenter = showTriangle ?
         new LatLng(largeBounds.getNorth(), props.item.coords[1]) :
         new LatLng(props.item.coords[0], props.item.coords[1])
     const itemBounds = itemCenter.toBounds(itemSize)
 
+    const triangle = showTriangle ? <Polygon interactive={false} color="black" fillOpacity={1}
+                                             positions={[new LatLng(props.item.coords[0], props.item.coords[1]),
+                                                 triangleBounds.getNorthWest(),
+                                                 triangleBounds.getNorthEast()
+                                             ]}/> : null
     if (props.item.url) {
         return <ImageOverlay className="item"
                              eventHandlers={{click: onClick}}
                              interactive={true}
                              url={props.item.url}
                              bounds={itemBounds}>
-            <Circle weight={2} fillColor="none" color="green"
+            <Circle weight={2} fillColor="none" color={props.item.type === "answer" ? "green" : "yellow"}
                     center={itemCenter} radius={itemSize / 2}/>
-            {showTriangle ? <Polygon interactive={false} color="black" fillOpacity={1} positions={[new LatLng(props.item.coords[0], props.item.coords[1]),
-                triangleBounds.getNorthWest(),
-                triangleBounds.getNorthEast()
-            ]} /> : null }
+            {triangle}
         </ImageOverlay>
     } else {
-
-        return <React.Fragment>
-            <SVGOverlay className="item"
-                        interactive={true}
-                        eventHandlers={{click: onClick}}
-                        bounds={itemBounds}>
-                {props.item.type === "answer" ? <CheckCircleOutlineRoundedIcon/> : <HelpOutlineRoundedIcon/>}
-            </SVGOverlay>
-            {showTriangle ? <Polygon interactive={false} color="black" fillOpacity={1} positions={[new LatLng(props.item.coords[0], props.item.coords[1]),
-                triangleBounds.getNorthWest(),
-                triangleBounds.getNorthEast()
-            ]} /> : null }
-        </React.Fragment>
+        return <SVGOverlay className="item"
+                           interactive={true}
+                           eventHandlers={{click: onClick}}
+                           bounds={itemBounds}>
+            {props.item.type === "answer" ? <CheckCircleOutlineRoundedIcon/> : <HelpOutlineRoundedIcon/>}
+            {triangle}
+        </SVGOverlay>
     }
-
 
 }
